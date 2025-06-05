@@ -19,4 +19,5 @@ export type ImageCardProps = Pick<
   'imageId' | 'width' | 'height' | 'size' | 'tags'
 > & {
   isSelected?: boolean;
+  onClick: (imageId: string) => void;
 };
