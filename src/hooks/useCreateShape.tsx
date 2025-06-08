@@ -1,9 +1,11 @@
 import { Circle, Line, Point, Rect, Shadow, Textbox, Triangle } from 'fabric';
 import { useCallback } from 'react';
 import useCanvasStore from 'store/useCanvasStore';
+import useModalStore from 'store/useModalStore';
 
 const useCreateShape = () => {
   const canvas = useCanvasStore((state) => state.canvas);
+  const openModal = useModalStore((state) => state.openModal);
 
   /** 원을 생성하는 함수 */
   const drawCircle = useCallback(() => {
@@ -130,8 +132,8 @@ const useCreateShape = () => {
   const drawImage = useCallback(() => {
     if (!canvas) return;
 
-    // TODO(홍빈): 이미지 리스트 모달 열리고 해당 이미지를 선택한 후 ADD버튼을 누르면 캔버스에 이미지 추가
-  }, [canvas]);
+    openModal();
+  }, [canvas, openModal]);
 
   return {
     drawCircle,
