@@ -3,7 +3,8 @@ import { VirtuosoGrid } from 'react-virtuoso';
 import { images } from 'utils/queries/images';
 import ImageCard from './ImageCard';
 import useCanvasStore from 'store/useCanvasStore';
-import type { ImageProps } from 'fabric';
+import useModalStore from 'store/useModalStore';
+import { FabricImage } from 'fabric';
 
 const gridComponents = {
   List: (
@@ -29,9 +30,10 @@ function ImageList() {
     staleTime: 1000 * 60 * 5, // 5분 동안 캐시 유지
   });
 
-  const { selectedImageSet, setSelectedImageSet } = useCanvasStore(
+  const { canvas, selectedImageSet, setSelectedImageSet } = useCanvasStore(
     (state) => state
   );
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const handleImageCardClick = (imageId: string) => {
     const newSelectedImageSet = new Set(selectedImageSet);
@@ -41,6 +43,27 @@ function ImageList() {
       newSelectedImageSet.add(imageId);
     }
     setSelectedImageSet(newSelectedImageSet);
+  };
+
+  const handleImageAddClick = () => {
+    if (!canvas) return;
+
+    selectedImageSet.forEach((imageId) => {
+      const imageUrl = `${import.meta.env.VITE_API_BASE_URL}/images/T1/${imageId}.svg`;
+
+      FabricImage.fromURL(imageUrl).then((img) => {
+        img.set({
+          left: 100,
+          top: 100,
+          scaleX: 0.5,
+          scaleY: 0.5,
+        });
+        canvas.add(img);
+      });
+    });
+
+    canvas.requestRenderAll();
+    closeModal();
   };
 
   const ItemContent = (index: number) => {
@@ -70,7 +93,7 @@ function ImageList() {
       {/* 가상화된 그리드 */}
       <VirtuosoGrid
         style={{ height: '100%' }}
-        totalCount={data.list.length}
+        totalCount={data.list?.length || 0}
         components={gridComponents}
         itemContent={ItemContent}
         overscan={8}
@@ -82,7 +105,7 @@ function ImageList() {
           type="button"
           aria-label="이미지 추가하기 버튼"
           className="p-4 text-blue-500 hover:text-blue-700 font-semibold bg-white rounded-lg shadow-md"
-          onClick={() => console.log('이미지 추가하기')}
+          onClick={handleImageAddClick}
         >
           이미지 추가하기
         </button>
