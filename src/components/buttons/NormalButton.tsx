@@ -14,7 +14,7 @@ type NormalButtonProps = {
 const SIZE_CLASSES = {
   small: 'w-24 text-base',
   medium: 'w-36 text-xl',
-  large: 'w-52 text-xl',
+  large: 'w-full text-xl',
 };
 
 function NormalButton({
@@ -37,6 +37,7 @@ function NormalButton({
 
   return (
     <button
+      type="button"
       className={className}
       style={{ background: bgColor }}
       onClick={onClick}
