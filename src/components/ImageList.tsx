@@ -58,6 +58,9 @@ function ImageList() {
         scaleX: 0.5,
         scaleY: 0.5,
       });
+      svg.set({
+        uid: new Date().getTime().toString(),
+      });
       canvas.add(svg);
     }
 

@@ -18,6 +18,7 @@ const useCreateShape = () => {
       stroke: 'black',
       strokeWidth: 1,
       fill: 'transparent',
+      uid: new Date().getTime().toString(),
     });
     const circlePos = new Point(100, 100);
     circle.setPositionByOrigin(circlePos, 'center', 'center');
@@ -35,6 +36,7 @@ const useCreateShape = () => {
       stroke: 'black',
       strokeWidth: 1,
       fill: 'transparent',
+      uid: new Date().getTime().toString(),
     });
     const squarePos = new Point(100, 100);
     square.setPositionByOrigin(squarePos, 'center', 'center');
@@ -52,6 +54,7 @@ const useCreateShape = () => {
       stroke: 'black',
       strokeWidth: 1,
       fill: 'transparent',
+      uid: new Date().getTime().toString(),
     });
     const trianglePos = new Point(100, 100);
     triangle.setPositionByOrigin(trianglePos, 'center', 'center');
@@ -66,6 +69,7 @@ const useCreateShape = () => {
     const line = new Line([50, 200, 200, 50], {
       stroke: 'black',
       strokeWidth: 1,
+      uid: new Date().getTime().toString(),
     });
     canvas.add(line);
     canvas.requestRenderAll();
@@ -83,6 +87,7 @@ const useCreateShape = () => {
       fontSize: 32,
       fill: 'black',
       fontFamily: 'Pretendard',
+      uid: new Date().getTime().toString(),
     });
 
     // 리사이즈될 때 fontSize를 동적으로 할당하는 이벤트 핸들러
@@ -121,6 +126,7 @@ const useCreateShape = () => {
         affectStroke: true,
       }),
       checkbox: true,
+      uid: new Date().getTime().toString(),
     });
     const checkBoxPos = new Point(100, 100);
     checkBox.setPositionByOrigin(checkBoxPos, 'center', 'center');

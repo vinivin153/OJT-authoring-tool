@@ -11,6 +11,9 @@ const useArrangeTool = () => {
     const activeObjects = canvas.getActiveObjects();
     canvas.remove(...activeObjects);
     const group = new Group([...activeObjects]);
+    group.set({
+      uid: new Date().getTime().toString(),
+    });
     canvas.add(group);
     canvas.setActiveObject(group);
     canvas.requestRenderAll();
@@ -22,6 +25,11 @@ const useArrangeTool = () => {
 
     const activeObject = canvas.getActiveObject() as Group;
     canvas.remove(activeObject);
+    activeObject.getObjects().forEach((obj, idx) => {
+      obj.set({
+        uid: (new Date().getTime() + idx).toString(),
+      });
+    });
     canvas.add(...activeObject.removeAll());
     canvas.requestRenderAll();
   };
