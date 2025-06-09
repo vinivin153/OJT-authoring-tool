@@ -5,5 +5,5 @@ export type ToolButtonsType = {
   /** 버튼 레이블 */
   label: string;
   /** 클릭 이벤트 핸들러 */
-  onClick?: () => void;
+  onClick: () => void;
 };
