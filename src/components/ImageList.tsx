@@ -4,7 +4,7 @@ import { images } from 'utils/queries/images';
 import ImageCard from './ImageCard';
 import useCanvasStore from 'store/useCanvasStore';
 import useModalStore from 'store/useModalStore';
-import { FabricImage } from 'fabric';
+import { FabricImage, loadSVGFromURL, util } from 'fabric';
 
 const gridComponents = {
   List: (
@@ -45,24 +45,24 @@ function ImageList() {
     setSelectedImageSet(newSelectedImageSet);
   };
 
-  const handleImageAddClick = () => {
+  const handleImageAddClick = async () => {
     if (!canvas) return;
 
-    selectedImageSet.forEach((imageId) => {
+    for (const imageId of selectedImageSet) {
       const imageUrl = `${import.meta.env.VITE_API_BASE_URL}/images/T1/${imageId}.svg`;
 
-      FabricImage.fromURL(imageUrl).then((img) => {
-        img.set({
-          left: 100,
-          top: 100,
-          scaleX: 0.5,
-          scaleY: 0.5,
-        });
-        canvas.add(img);
+      const img = await loadSVGFromURL(imageUrl);
+      const svg = util.groupSVGElements(img.objects as FabricImage[], {
+        left: 100,
+        top: 100,
+        scaleX: 0.5,
+        scaleY: 0.5,
       });
-    });
+      canvas.add(svg);
+    }
 
     canvas.requestRenderAll();
+    setSelectedImageSet(new Set());
     closeModal();
   };
 
