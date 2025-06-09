@@ -5,15 +5,18 @@ import RightAlign from 'assets/Images/align-right.svg?react';
 import Bold from 'assets/Images/bold.svg?react';
 import Italic from 'assets/Images/italic.svg?react';
 import type { ToolButtonsType } from './toolType';
+import useTextTool from 'hooks/useTextTool';
 
 /** 텍스트 도구 컴포넌트 */
 function TextTool() {
+  const { alignLeft, alignCenter, alignRight, boldText, italicText } =
+    useTextTool();
   const textToolButtons: ToolButtonsType[] = [
-    { icon: LeftAlign, label: '왼쪽 정렬' },
-    { icon: CenterAlign, label: '가운데 정렬' },
-    { icon: RightAlign, label: '오른쪽 정렬' },
-    { icon: Bold, label: '굵게' },
-    { icon: Italic, label: '기울임꼴' },
+    { icon: LeftAlign, label: '왼쪽 정렬', onClick: alignLeft },
+    { icon: CenterAlign, label: '가운데 정렬', onClick: alignCenter },
+    { icon: RightAlign, label: '오른쪽 정렬', onClick: alignRight },
+    { icon: Bold, label: '굵게', onClick: boldText },
+    { icon: Italic, label: '기울임꼴', onClick: italicText },
   ];
 
   return (
@@ -22,12 +25,8 @@ function TextTool() {
         텍스트 도구
       </span>
       <div className="flex">
-        {textToolButtons.map(({ icon: Icon, label }, index) => (
-          <SVGButton
-            key={index}
-            // TODO(홍빈): 핸들러 기능 구현 후 매직넘버 제거
-            onClick={() => console.log(`${label} button clicked`)}
-          >
+        {textToolButtons.map(({ icon: Icon, label, onClick }) => (
+          <SVGButton key={label} onClick={onClick}>
             <Icon />
           </SVGButton>
         ))}
