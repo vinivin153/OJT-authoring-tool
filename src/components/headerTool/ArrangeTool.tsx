@@ -4,14 +4,29 @@ import UnGroup from 'assets/Images/ungroup.svg?react';
 import HorizontalAlign from 'assets/Images/horizontal.svg?react';
 import VerticalAlign from 'assets/Images/vertical.svg?react';
 import type { ToolButtonsType } from './toolType';
+import useArrangeTool from 'hooks/useArrangeTool';
 
 /** 그룹 및 정렬 도구 컴포넌트 */
 function ArrangeTool() {
+  const {
+    groupSelectedObjects,
+    ungroupSelectedObjects,
+    horizontalAlignSelectedObjects,
+    verticalAlignSelectedObjects,
+  } = useArrangeTool();
   const arrangeToolButtons: ToolButtonsType[] = [
-    { icon: Group, label: '그룹으로 묶기' },
-    { icon: UnGroup, label: '그룹 해제' },
-    { icon: HorizontalAlign, label: '수평 정렬' },
-    { icon: VerticalAlign, label: '수직 정렬' },
+    { icon: Group, label: '그룹으로 묶기', onClick: groupSelectedObjects },
+    { icon: UnGroup, label: '그룹 해제', onClick: ungroupSelectedObjects },
+    {
+      icon: HorizontalAlign,
+      label: '수평 정렬',
+      onClick: horizontalAlignSelectedObjects,
+    },
+    {
+      icon: VerticalAlign,
+      label: '수직 정렬',
+      onClick: verticalAlignSelectedObjects,
+    },
   ];
 
   return (
@@ -20,12 +35,8 @@ function ArrangeTool() {
         그룹 / 정렬
       </span>
       <div className="flex">
-        {arrangeToolButtons.map(({ icon: Icon, label }, index) => (
-          <SVGButton
-            key={index}
-            // TODO(홍빈): 핸들러 기능 구현 후 매직넘버 제거
-            onClick={() => console.log(`${label} button clicked`)}
-          >
+        {arrangeToolButtons.map(({ icon: Icon, label, onClick }) => (
+          <SVGButton key={label} onClick={onClick}>
             <Icon />
           </SVGButton>
         ))}
