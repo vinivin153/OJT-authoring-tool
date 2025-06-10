@@ -13,13 +13,12 @@ type NormalButtonProps = {
 
 const SIZE_CLASSES = {
   small: 'w-24 text-base',
-  medium: 'w-36 text-xl',
+  medium: 'w-36 h-10! text-xl',
   large: 'w-full text-xl',
 };
 
 function NormalButton({
   text,
-
   size = 'medium',
   borderColor,
   bgColor = 'linear-gradient(135deg, #667eea, #594ba2)',
