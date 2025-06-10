@@ -1,17 +1,19 @@
 import { create } from 'zustand';
 
+type ModalType = 'image' | 'preview' | 'none';
+
 type ModalStore = {
   isOpen: boolean;
-  openModal: () => void;
+  modalType: ModalType;
+  openModal: (modalType: ModalType) => void;
   closeModal: () => void;
 };
 
-const useModalStore = create<ModalStore>((set) => {
-  return {
-    isOpen: false,
-    openModal: () => set({ isOpen: true }),
-    closeModal: () => set({ isOpen: false }),
-  };
-});
+const useModalStore = create<ModalStore>((set) => ({
+  isOpen: false,
+  modalType: 'none',
+  openModal: (modalType) => set({ isOpen: true, modalType }),
+  closeModal: () => set({ isOpen: false }),
+}));
 
 export default useModalStore;
