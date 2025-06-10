@@ -1,4 +1,13 @@
-import { Circle, Line, Point, Rect, Shadow, Textbox, Triangle } from 'fabric';
+import {
+  Circle,
+  FabricObject,
+  Line,
+  Point,
+  Rect,
+  Shadow,
+  Textbox,
+  Triangle,
+} from 'fabric';
 import { useCallback } from 'react';
 import useCanvasStore from 'store/useCanvasStore';
 import useModalStore from 'store/useModalStore';
@@ -112,6 +121,7 @@ const useCreateShape = () => {
   const drawCheckBox = useCallback(() => {
     if (!canvas) return;
 
+    FabricObject.customProperties = ['isCheckbox', 'isSelected', 'uid'];
     const checkBox = new Rect({
       width: 100,
       height: 100,
@@ -125,9 +135,10 @@ const useCreateShape = () => {
         blur: 25,
         affectStroke: true,
       }),
-      checkbox: true,
+      isCheckbox: true,
       uid: new Date().getTime().toString(),
     });
+
     const checkBoxPos = new Point(100, 100);
     checkBox.setPositionByOrigin(checkBoxPos, 'center', 'center');
     canvas.add(checkBox);
@@ -138,7 +149,7 @@ const useCreateShape = () => {
   const drawImage = useCallback(() => {
     if (!canvas) return;
 
-    openModal();
+    openModal('image');
   }, [canvas, openModal]);
 
   return {
