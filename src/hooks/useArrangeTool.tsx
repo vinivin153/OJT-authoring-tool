@@ -34,14 +34,19 @@ const useArrangeTool = () => {
   const ungroupSelectedObjects = () => {
     if (!canvas) return;
 
-    const activeObject = canvas.getActiveObject() as Group;
-    canvas.remove(activeObject);
-    activeObject.getObjects().forEach((obj, idx) => {
+    // 선택된 오브젝트가 그룹이 아니면 예외처리
+    const activeObject = canvas.getActiveObject();
+    if (!activeObject || !activeObject.isType('group')) return;
+
+    const group = activeObject as Group;
+    canvas.remove(group);
+
+    group.getObjects().forEach((obj, idx) => {
       obj.set({
         uid: (new Date().getTime() + idx).toString(),
       });
     });
-    canvas.add(...activeObject.removeAll());
+    canvas.add(...group.removeAll());
     canvas.requestRenderAll();
   };
 
