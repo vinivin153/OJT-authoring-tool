@@ -5,10 +5,20 @@ import LayerTool from './headerTool/LayerTool';
 import ShapeTool from './headerTool/ShapeTool';
 import TextTool from './headerTool/TextTool';
 import useModalStore from 'store/useModalStore';
+import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 
 function Header() {
   const { saveData } = useSaveData();
   const openModal = useModalStore((state) => state.openModal);
+
+  const handleSaveClick = useCallback(() => {
+    saveData();
+    toast.success('저장되었습니다!', {
+      position: 'top-left',
+      autoClose: 2000,
+    });
+  }, [saveData]);
 
   return (
     <header className="flex gap-10 rounded-2xl bg-[#f7f8fd] text-gray-800p-4 px-10">
@@ -29,8 +39,11 @@ function Header() {
             size="medium"
             onClick={() => openModal('preview')}
           />
-          {/* {TODO(홍빈):저장하기 클릭시 토스트 메시지 띄우기} */}
-          <NormalButton text="저장하기" size="medium" onClick={saveData} />
+          <NormalButton
+            text="저장하기"
+            size="medium"
+            onClick={handleSaveClick}
+          />
         </div>
       </div>
     </header>
