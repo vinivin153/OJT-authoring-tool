@@ -10,11 +10,13 @@ import {
 } from 'fabric';
 import { useCallback } from 'react';
 import useCanvasStore from 'store/useCanvasStore';
+import { useHistoryStore } from 'store/useHistoryStore';
 import useModalStore from 'store/useModalStore';
 
 const useCreateShape = () => {
   const canvas = useCanvasStore((state) => state.canvas);
   const openModal = useModalStore((state) => state.openModal);
+  const pushUndoHistory = useHistoryStore((state) => state.pushUndoHistory);
 
   /** 원을 생성하는 함수 */
   const drawCircle = useCallback(() => {
@@ -31,9 +33,10 @@ const useCreateShape = () => {
     });
     const circlePos = new Point(100, 100);
     circle.setPositionByOrigin(circlePos, 'center', 'center');
+    pushUndoHistory('add', [circle]);
     canvas.add(circle);
     canvas.requestRenderAll();
-  }, [canvas]);
+  }, [canvas, pushUndoHistory]);
 
   /** 사각형을 생성하는 함수 */
   const drawSquare = useCallback(() => {
@@ -49,9 +52,10 @@ const useCreateShape = () => {
     });
     const squarePos = new Point(100, 100);
     square.setPositionByOrigin(squarePos, 'center', 'center');
+    pushUndoHistory('add', [square]);
     canvas.add(square);
     canvas.requestRenderAll();
-  }, [canvas]);
+  }, [canvas, pushUndoHistory]);
 
   /** 세모를 생성하는 함수 */
   const drawTriangle = useCallback(() => {
@@ -67,9 +71,10 @@ const useCreateShape = () => {
     });
     const trianglePos = new Point(100, 100);
     triangle.setPositionByOrigin(trianglePos, 'center', 'center');
+    pushUndoHistory('add', [triangle]);
     canvas.add(triangle);
     canvas.requestRenderAll();
-  }, [canvas]);
+  }, [canvas, pushUndoHistory]);
 
   /** 라인을 생성하는 함수 */
   const drawLine = useCallback(() => {
@@ -80,9 +85,10 @@ const useCreateShape = () => {
       strokeWidth: 1,
       uid: new Date().getTime().toString(),
     });
+    pushUndoHistory('add', [line]);
     canvas.add(line);
     canvas.requestRenderAll();
-  }, [canvas]);
+  }, [canvas, pushUndoHistory]);
 
   /** 텍스트를 생성하는 함수 */
   const drawText = useCallback(() => {
@@ -113,9 +119,10 @@ const useCreateShape = () => {
       canvas.requestRenderAll();
     });
 
+    pushUndoHistory('add', [text]);
     canvas.add(text);
     canvas.requestRenderAll();
-  }, [canvas]);
+  }, [canvas, pushUndoHistory]);
 
   /** 체크박스를 생성하는 함수 */
   const drawCheckBox = useCallback(() => {
@@ -141,9 +148,10 @@ const useCreateShape = () => {
 
     const checkBoxPos = new Point(100, 100);
     checkBox.setPositionByOrigin(checkBoxPos, 'center', 'center');
+    pushUndoHistory('add', [checkBox]);
     canvas.add(checkBox);
     canvas.requestRenderAll();
-  }, [canvas]);
+  }, [canvas, pushUndoHistory]);
 
   /** 이미지를 생성하는 함수 */
   const drawImage = useCallback(() => {
