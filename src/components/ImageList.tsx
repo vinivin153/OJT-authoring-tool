@@ -5,6 +5,7 @@ import ImageCard from './ImageCard';
 import useCanvasStore from 'store/useCanvasStore';
 import useModalStore from 'store/useModalStore';
 import { FabricImage, loadSVGFromURL, util } from 'fabric';
+import NormalButton from './buttons/NormalButton';
 
 const gridComponents = {
   List: (
@@ -104,14 +105,11 @@ function ImageList() {
 
       {/* 이미지 추가 버튼 */}
       <div className="absolute bottom-4 right-6">
-        <button
-          type="button"
-          aria-label="이미지 추가하기 버튼"
-          className="p-4 text-blue-500 hover:text-blue-700 font-semibold bg-white rounded-lg shadow-md"
+        <NormalButton
+          size="medium"
+          text="이미지 추가하기"
           onClick={handleImageAddClick}
-        >
-          이미지 추가하기
-        </button>
+        />
       </div>
     </div>
   );
