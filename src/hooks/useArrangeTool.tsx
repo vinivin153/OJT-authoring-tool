@@ -9,11 +9,22 @@ const useArrangeTool = () => {
     if (!canvas) return;
 
     const activeObjects = canvas.getActiveObjects();
+    if (activeObjects.length === 0) return;
+
+    // 선택된 오브젝트 중에서 checkbox가 있는지 확인하고, 정렬
+    const sortedObjects = [...activeObjects].sort((a, b) => {
+      const aIsCheckbox = a.get('isCheckbox') ? 0 : 1;
+      const bIsCheckbox = b.get('isCheckbox') ? 0 : 1;
+      return aIsCheckbox - bIsCheckbox;
+    });
+
     canvas.remove(...activeObjects);
-    const group = new Group([...activeObjects]);
+
+    const group = new Group(sortedObjects);
     group.set({
       uid: new Date().getTime().toString(),
     });
+
     canvas.add(group);
     canvas.setActiveObject(group);
     canvas.requestRenderAll();
