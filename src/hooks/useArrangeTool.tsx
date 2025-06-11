@@ -1,4 +1,4 @@
-import { Group } from 'fabric';
+import { ActiveSelection, Group } from 'fabric';
 import useCanvasStore from 'store/useCanvasStore';
 
 const useArrangeTool = () => {
@@ -59,6 +59,11 @@ const useArrangeTool = () => {
       });
     });
 
+    const selection = new ActiveSelection(activeObjects, {
+      canvas: canvas,
+    });
+
+    canvas.setActiveObject(selection);
     canvas.requestRenderAll();
   };
 
@@ -77,6 +82,11 @@ const useArrangeTool = () => {
       });
     });
 
+    const selection = new ActiveSelection(activeObjects, {
+      canvas: canvas,
+    });
+
+    canvas.setActiveObject(selection);
     canvas.requestRenderAll();
   };
 
