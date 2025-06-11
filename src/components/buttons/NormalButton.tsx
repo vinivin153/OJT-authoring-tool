@@ -37,6 +37,7 @@ function NormalButton({
   return (
     <button
       type="button"
+      aria-label={text}
       className={className}
       style={{ background: bgColor }}
       onClick={onClick}
