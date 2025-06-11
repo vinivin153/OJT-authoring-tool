@@ -2,12 +2,12 @@ import { COLORS } from 'constant/constant';
 import { Canvas } from 'fabric';
 import { useCallback, useEffect, useRef } from 'react';
 import useCanvasStore from 'store/useCanvasStore';
-import useKeyboardHandler from './useKeyBoardHandler';
+import useKeyboardShortcuts from './useCanvasShortcuts';
 
 const useCreateCanvas = () => {
   const { setCanvas } = useCanvasStore((state) => state);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  useKeyboardHandler();
+  useKeyboardShortcuts();
 
   /** 캔버스를 생성하는 함수 */
   const createCanvas = useCallback(() => {
