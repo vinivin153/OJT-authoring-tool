@@ -1,5 +1,5 @@
 import SVGButton from '../buttons/SVGButton';
-import Group from 'assets/Images/group.svg?react';
+import Group from 'assets/Images/link.svg?react';
 import UnGroup from 'assets/Images/ungroup.svg?react';
 import HorizontalAlign from 'assets/Images/horizontal.svg?react';
 import VerticalAlign from 'assets/Images/vertical.svg?react';
@@ -36,7 +36,7 @@ function ArrangeTool() {
       </span>
       <div className="flex">
         {arrangeToolButtons.map(({ icon: Icon, label, onClick }) => (
-          <SVGButton key={label} onClick={onClick}>
+          <SVGButton key={label} label={label} onClick={onClick}>
             <Icon />
           </SVGButton>
         ))}

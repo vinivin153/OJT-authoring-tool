@@ -24,7 +24,7 @@ function LayerTool() {
       </span>
       <div className="flex">
         {LayerToolButtons.map(({ icon: Icon, label, onClick }) => (
-          <SVGButton key={label} onClick={onClick}>
+          <SVGButton key={label} label={label} onClick={onClick}>
             <Icon />
           </SVGButton>
         ))}

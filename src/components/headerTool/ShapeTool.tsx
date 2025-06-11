@@ -38,11 +38,7 @@ function ShapeTool() {
       </span>
       <div className="flex">
         {shapeToolButtons.map(({ icon: Icon, label, onClick }) => (
-          <SVGButton
-            key={label}
-            // TODO(홍빈): 핸들러 기능 구현 후 매직넘버 제거
-            onClick={onClick || (() => console.log(`${label} button clicked`))}
-          >
+          <SVGButton key={label} label={label} onClick={onClick}>
             <Icon />
           </SVGButton>
         ))}
