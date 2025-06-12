@@ -61,13 +61,18 @@ const useArrangeTool = () => {
   const horizontalAlignSelectedObjects = () => {
     if (!canvas) return;
 
+    const activeObject = canvas.getActiveObject();
+    if (!activeObject) return;
+
     const activeObjects = canvas.getActiveObjects();
-    if (!activeObjects || activeObjects.length === 0) return;
+    if (!activeObjects || activeObjects.length <= 1) return;
+
+    const centerY = activeObject.getCenterPoint().y;
 
     activeObjects.forEach((obj) => {
+      const currentCenter = obj.getCenterPoint();
       obj.set({
-        top: 0,
-        originY: 'center',
+        top: obj.top + (centerY - currentCenter.y),
       });
     });
 
@@ -83,13 +88,18 @@ const useArrangeTool = () => {
   const verticalAlignSelectedObjects = () => {
     if (!canvas) return;
 
+    const activeObject = canvas.getActiveObject();
+    if (!activeObject) return;
+
     const activeObjects = canvas.getActiveObjects();
-    if (!activeObjects || activeObjects.length === 0) return;
+    if (!activeObjects || activeObjects.length <= 1) return;
+
+    const centerX = activeObject.getCenterPoint().x;
 
     activeObjects.forEach((obj) => {
+      const currentCenter = obj.getCenterPoint();
       obj.set({
-        left: 0,
-        originX: 'center',
+        left: obj.left + (centerX - currentCenter.x),
       });
     });
 
