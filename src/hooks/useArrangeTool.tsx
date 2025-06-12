@@ -51,9 +51,9 @@ const useArrangeTool = () => {
       });
     });
 
+    canvas.add(...group.removeAll());
     const selection = new ActiveSelection(objects, { canvas });
     canvas.setActiveObject(selection);
-    canvas.add(...group.removeAll());
     canvas.requestRenderAll();
   };
 
