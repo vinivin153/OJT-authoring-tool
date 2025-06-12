@@ -10,3 +10,10 @@ export const KEY_CODES = Object.freeze({
   GROUP: 'g',
   UNGROUP: 'g',
 } as const);
+
+export const RESTORE_FUNCTIONS = Object.freeze({
+  ADD: 'add',
+  DELETE: 'delete',
+  GROUP: 'group',
+  UNGROUP: 'ungroup',
+} as const);

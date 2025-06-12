@@ -1,6 +1,7 @@
 import useCanvasStore from 'store/useCanvasStore';
 import useArrangeTool from './useArrangeTool';
 import { useHistoryStore } from 'store/useHistoryStore';
+import { RESTORE_FUNCTIONS } from 'constant/constant';
 
 /**
  * 캔버스에서 도형을 삭제, 뒤로 되돌리기, 앞으로 되돌리기 등의 작업을 수행하는 훅입니다.
@@ -12,6 +13,7 @@ const useCanvasOperations = () => {
   const { pushUndoHistory, popUndoHistory, pushRedoHistory, popRedoHistory } =
     useHistoryStore();
   const { groupSelectedObjects, ungroupSelectedObjects } = useArrangeTool();
+  const { ADD, DELETE, GROUP, UNGROUP } = RESTORE_FUNCTIONS;
 
   /** 도형을 삭제하는 함수. */
   const deleteShape = () => {
@@ -31,7 +33,7 @@ const useCanvasOperations = () => {
     setChoiceList(updatedChoiceList);
 
     // 현재 활성화된 도형들을 히스토리에 저장
-    pushUndoHistory('delete', activeObjects);
+    pushUndoHistory(DELETE, activeObjects);
 
     // 활성화된 도형들을 캔버스에서 제거
     canvas.remove(...activeObjects);
@@ -48,23 +50,23 @@ const useCanvasOperations = () => {
     const { type: historyType, objects: restoreObjects } = history;
 
     switch (historyType) {
-      case 'add':
-        pushRedoHistory('delete', restoreObjects);
+      case ADD:
+        pushRedoHistory(DELETE, restoreObjects);
         canvas.remove(...restoreObjects);
         break;
 
-      case 'delete':
-        pushRedoHistory('add', restoreObjects);
+      case DELETE:
+        pushRedoHistory(ADD, restoreObjects);
         canvas.add(...restoreObjects);
         break;
 
-      case 'group':
-        pushRedoHistory('ungroup', restoreObjects);
+      case GROUP:
+        pushRedoHistory(UNGROUP, restoreObjects);
         ungroupSelectedObjects();
         break;
 
-      case 'ungroup':
-        pushRedoHistory('group', restoreObjects);
+      case UNGROUP:
+        pushRedoHistory(GROUP, restoreObjects);
         groupSelectedObjects();
         break;
     }
@@ -81,23 +83,23 @@ const useCanvasOperations = () => {
     const { type: historyType, objects: restoreObjects } = history;
 
     switch (historyType) {
-      case 'add':
-        pushUndoHistory('delete', restoreObjects);
+      case ADD:
+        pushUndoHistory(DELETE, restoreObjects);
         canvas.remove(...restoreObjects);
         break;
 
-      case 'delete':
-        pushUndoHistory('add', restoreObjects);
+      case DELETE:
+        pushUndoHistory(ADD, restoreObjects);
         canvas.add(...restoreObjects);
         break;
 
-      case 'group':
-        pushUndoHistory('ungroup', restoreObjects);
+      case GROUP:
+        pushUndoHistory(UNGROUP, restoreObjects);
         ungroupSelectedObjects();
         break;
 
-      case 'ungroup':
-        pushUndoHistory('group', restoreObjects);
+      case UNGROUP:
+        pushUndoHistory(GROUP, restoreObjects);
         groupSelectedObjects();
         break;
     }
