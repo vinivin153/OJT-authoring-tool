@@ -1,8 +1,10 @@
 import { ActiveSelection, Group } from 'fabric';
 import useCanvasStore from 'store/useCanvasStore';
+import { useHistoryStore } from 'store/useHistoryStore';
 
 const useArrangeTool = () => {
   const { canvas } = useCanvasStore((state) => state);
+  const { pushUndoHistory } = useHistoryStore();
 
   /** 선택된 요소를 그룹핑 하는 함수 */
   const groupSelectedObjects = () => {
@@ -25,6 +27,7 @@ const useArrangeTool = () => {
       uid: new Date().getTime().toString(),
     });
 
+    pushUndoHistory('group', [group]);
     canvas.add(group);
     canvas.setActiveObject(group);
     canvas.requestRenderAll();
@@ -41,11 +44,15 @@ const useArrangeTool = () => {
     const group = activeObject as Group;
     canvas.remove(group);
 
-    group.getObjects().forEach((obj, idx) => {
+    const objects = group.getObjects();
+    objects.forEach((obj, idx) => {
       obj.set({
         uid: (new Date().getTime() + idx).toString(),
       });
     });
+
+    const selection = new ActiveSelection(objects, { canvas });
+    canvas.setActiveObject(selection);
     canvas.add(...group.removeAll());
     canvas.requestRenderAll();
   };

@@ -37,13 +37,11 @@ const useCanvasOperations = () => {
 
     // 현재 활성화된 도형들을 히스토리에 저장
     pushUndoHistory('delete', activeObjects);
-    debugHistory();
 
     // 활성화된 도형들을 캔버스에서 제거
     canvas.remove(...activeObjects);
     canvas.discardActiveObject();
     canvas.requestRenderAll();
-    console.log(canvas.getObjects());
   };
 
   const undo = () => {
@@ -77,14 +75,11 @@ const useCanvasOperations = () => {
         break;
     }
 
-    console.log('\nafter undo\n');
-    debugHistory();
     canvas.requestRenderAll();
   };
 
   const redo = () => {
     if (!canvas) return;
-    debugHistory();
 
     const history = popRedoHistory();
 
