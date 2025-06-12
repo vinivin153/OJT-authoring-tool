@@ -6,6 +6,7 @@ function ChoiceList() {
   const canvas = useCanvasStore((state) => state.canvas);
   const choiceList = useCanvasStore((state) => state.choiceList);
   const setChoiceList = useCanvasStore((state) => state.setChoiceList);
+  const hasSelection = useCanvasStore((state) => state.hasSelection);
 
   const handleAddChoiceClick = () => {
     if (!canvas) return;
@@ -55,6 +56,7 @@ function ChoiceList() {
         <NormalButton
           text="선택지 추가"
           size="large"
+          disabled={!hasSelection}
           onClick={handleAddChoiceClick}
         />
       </div>

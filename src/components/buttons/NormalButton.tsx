@@ -4,6 +4,7 @@ type ButtonSize = 'small' | 'medium' | 'large';
 
 type NormalButtonProps = {
   text: string;
+  disabled?: boolean;
   size?: ButtonSize;
   borderColor?: string;
   bgColor?: string;
@@ -19,6 +20,7 @@ const SIZE_CLASSES = {
 
 function NormalButton({
   text,
+  disabled,
   size = 'medium',
   borderColor,
   bgColor = 'linear-gradient(135deg, #667eea, #594ba2)',
@@ -29,18 +31,29 @@ function NormalButton({
     'h-12',
     'px-2',
     'py-4',
+    'transition-all duration-200',
     SIZE_CLASSES[size],
     borderColor ? `border ${borderColor}` : 'border-none',
-    textColor
+    disabled
+      ? 'text-gray-400 cursor-not-allowed pointer-events-none'
+      : `${textColor} cursor-pointer hover:scale-105 active:scale-95`
   );
+
+  const getBackgroundStyle = () => {
+    if (disabled) {
+      return { background: '#e5e7eb' };
+    }
+    return { background: bgColor };
+  };
 
   return (
     <button
       type="button"
       aria-label={text}
       className={className}
-      style={{ background: bgColor }}
-      onClick={onClick}
+      style={getBackgroundStyle()}
+      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
     >
       {text}
     </button>
