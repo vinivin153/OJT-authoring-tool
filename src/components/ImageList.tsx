@@ -6,6 +6,8 @@ import useCanvasStore from 'store/useCanvasStore';
 import useModalStore from 'store/useModalStore';
 import { FabricImage, loadSVGFromURL, util } from 'fabric';
 import NormalButton from './buttons/NormalButton';
+import Loading from './Loading';
+import { useEffect, useState } from 'react';
 
 const gridComponents = {
   List: (
@@ -26,15 +28,24 @@ const gridComponents = {
 };
 
 function ImageList() {
+  const [showLoading, setShowLoading] = useState(true);
   const { data, isError, isPending } = useQuery({
     ...images.imageList(),
     staleTime: 1000 * 60 * 5, // 5분 동안 캐시 유지
   });
 
-  const { canvas, selectedImageSet, setSelectedImageSet } = useCanvasStore(
-    (state) => state
-  );
+  const { canvas, selectedImageSet, setSelectedImageSet } = useCanvasStore();
   const closeModal = useModalStore((state) => state.closeModal);
+
+  useEffect(() => {
+    if (!isPending) {
+      const timer = setTimeout(() => {
+        setShowLoading(false);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isPending]);
 
   const handleImageCardClick = (imageId: string) => {
     const newSelectedImageSet = new Set(selectedImageSet);
@@ -89,7 +100,7 @@ function ImageList() {
     );
   };
 
-  if (isPending) return <div>Loading..</div>;
+  if (isPending || showLoading) return <Loading />;
   if (isError) return <div>Error loading images.</div>;
 
   return (
