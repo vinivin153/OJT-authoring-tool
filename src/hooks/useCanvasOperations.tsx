@@ -9,13 +9,8 @@ const useCanvasOperations = () => {
   const canvas = useCanvasStore((state) => state.canvas);
   const choiceList = useCanvasStore((state) => state.choiceList);
   const setChoiceList = useCanvasStore((state) => state.setChoiceList);
-  const {
-    pushUndoHistory,
-    popUndoHistory,
-    pushRedoHistory,
-    popRedoHistory,
-    debugHistory,
-  } = useHistoryStore();
+  const { pushUndoHistory, popUndoHistory, pushRedoHistory, popRedoHistory } =
+    useHistoryStore();
   const { groupSelectedObjects, ungroupSelectedObjects } = useArrangeTool();
 
   /** 도형을 삭제하는 함수. */
@@ -46,7 +41,6 @@ const useCanvasOperations = () => {
 
   const undo = () => {
     if (!canvas) return;
-    debugHistory();
 
     const history = popUndoHistory();
 
@@ -107,9 +101,6 @@ const useCanvasOperations = () => {
         groupSelectedObjects();
         break;
     }
-
-    console.log('\nafter redo\n');
-    debugHistory();
     canvas.requestRenderAll();
   };
 

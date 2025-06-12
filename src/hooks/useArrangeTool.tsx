@@ -86,7 +86,6 @@ const useArrangeTool = () => {
     const activeObjects = canvas.getActiveObjects();
     if (!activeObjects || activeObjects.length === 0) return;
 
-    console.log(activeObjects);
     activeObjects.forEach((obj) => {
       obj.set({
         left: 0,
