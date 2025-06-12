@@ -17,25 +17,21 @@ const useKeyboardShortcuts = () => {
 
       switch (true) {
         case key === KEY_CODES.DELETE:
-          console.log('Delete action triggered');
           deleteShape();
           break;
 
         case isCmd && shiftKey && key.toLowerCase() === KEY_CODES.REDO:
           event.preventDefault();
-          console.log('Redo action triggered');
           redo();
           break;
 
         case isCmd && key.toLowerCase() === KEY_CODES.UNDO:
           event.preventDefault();
-          console.log('Undo action triggered');
           undo();
           break;
 
         case isCmd && shiftKey && key.toLowerCase() === KEY_CODES.UNGROUP:
           event.preventDefault();
-          console.log('Ungroup action triggered');
           ungroupSelectedObjects();
           break;
 
