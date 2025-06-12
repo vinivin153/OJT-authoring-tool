@@ -16,7 +16,6 @@ type HistoryStore = {
   popUndoHistory: () => HistoryEntry | undefined;
   popRedoHistory: () => HistoryEntry | undefined;
   clearHistory: () => void;
-  debugHistory: () => void;
 };
 
 export const useHistoryStore = create<HistoryStore>((set, get) => ({
@@ -57,11 +56,5 @@ export const useHistoryStore = create<HistoryStore>((set, get) => ({
 
   clearHistory: () => {
     set({ undoHistory: [], redoHistory: [] });
-  },
-
-  debugHistory: () => {
-    const { undoHistory, redoHistory } = get();
-    console.log('Undo History:', undoHistory);
-    console.log('Redo History:', redoHistory);
   },
 }));
