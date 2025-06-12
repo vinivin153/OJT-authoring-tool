@@ -15,6 +15,7 @@ function Preview() {
     const fabricCanvas = new Canvas(canvasEl, {
       width: canvasRect.width,
       height: canvasRect.height,
+      selection: false,
     });
     fabricCanvasRef.current = fabricCanvas;
 
