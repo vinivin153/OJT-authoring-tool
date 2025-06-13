@@ -11,7 +11,7 @@ const useArrangeTool = () => {
     if (!canvas) return;
 
     const activeObjects = canvas.getActiveObjects();
-    if (activeObjects.length === 0) return;
+    if (activeObjects.length <= 1) return;
 
     // 선택된 오브젝트 중에서 checkbox가 있는지 확인하고, 정렬
     const sortedObjects = [...activeObjects].sort((a, b) => {
