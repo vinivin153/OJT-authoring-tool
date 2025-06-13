@@ -38,14 +38,16 @@ function ImageList() {
   const closeModal = useModalStore((state) => state.closeModal);
 
   useEffect(() => {
-    if (!isPending) {
+    if (data) {
+      setShowLoading(false);
+    } else {
       const timer = setTimeout(() => {
         setShowLoading(false);
-      }, 1000);
+      }, 250);
 
       return () => clearTimeout(timer);
     }
-  }, [isPending]);
+  }, []);
 
   const handleImageCardClick = (imageId: string) => {
     const newSelectedImageSet = new Set(selectedImageSet);
