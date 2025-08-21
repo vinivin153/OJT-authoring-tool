@@ -1,5 +1,5 @@
 # 퀴즈 만들기
-https://vinivin153.github.io/OJT-quiz/
+https://vinivin153.github.io/OJT-authoring-tool
 
 
 ## 설명
